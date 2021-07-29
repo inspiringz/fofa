@@ -16,7 +16,7 @@ go build -ldflags "-s -w" -trimpath
 
 ## Usage
 
-- fofa_email / fofa_key 优先从环境变量`FOFA_EMAIL`/`FOFA_KEY`中获取，其次从 option/parsecli.go 中定义的`DefaultEmail`/`DefaultAPIKey`中获取，再其次从命令行参数`-m`/`-k`指定的值中获取。
+- fofa_email / fofa_key 优先从命令行参数`-m`/`-k`指定的值中获取，若无则尝试从环境变量`FOFA_EMAIL`/`FOFA_KEY`中获取，最后尝试从 option/parsecli.go 中定义的`DefaultEmail`/`DefaultAPIKey`中获取。
 
 ```sh
 ❯ ./fofa_darwin_amd64 -h
