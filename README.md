@@ -4,7 +4,7 @@
 
 - Goroutine + retryablehttp
 
-![image-20210728222931097](images/image-20210728222931097.png)
+![image-20210730141504333](images/image-20210730141504333.png)
 
 ![image-20210728223137038](images/image-20210728223137038.png)
 
