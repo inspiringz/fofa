@@ -2,6 +2,8 @@
 
 一款 Go 语言编写的小巧、简洁、快速采集 fofa 数据导出到 Excel 表单的小工具。
 
+- Goroutine + retryablehttp
+
 ![image-20210728222931097](images/image-20210728222931097.png)
 
 ![image-20210728223137038](images/image-20210728223137038.png)
@@ -18,8 +20,7 @@ go build -ldflags "-s -w" -trimpath
 
 - fofa_email / fofa_key 优先从命令行参数`-m`/`-k`指定的值中获取，若无则尝试从环境变量`FOFA_EMAIL`/`FOFA_KEY`中获取，最后尝试从 option/parsecli.go 中定义的`DefaultEmail`/`DefaultAPIKey`中获取。
 
-```sh
-❯ ./fofa_darwin_amd64 -h
+```
 
       ░░░░▐▐░░░  dMMMMMP .aMMMb  dMMMMMP .aMMMb
  ▐  ░░░░░▄██▄▄  dMP     dMP"dMP dMP     dMP"dMP
@@ -29,8 +30,8 @@ go build -ldflags "-s -w" -trimpath
  https://github.com/inspiringz/fofa
 
 Usage:
-  ./fofa_darwin_amd64 -m fofa_email -k fofa_key -q 'header="elastic"' -s 10000 -o data.xlsx
-  ./fofa_darwin_amd64 -m fofa_email -k fofa_key -f query_rules_file.txt -s 10000 -o data.xlsx
+  ./main -m fofa_email -k fofa_key -q 'header="elastic"' -s 10000 -o data.xlsx
+  ./main -m fofa_email -k fofa_key -f query_rules_file.txt -s 10000 -o data.xlsx
 
 Options:
   -h, --help
@@ -40,5 +41,19 @@ Options:
   -f, --file FILE            batch query rules file (default: '')
   -s, --size SIZE            export data volume (default: 10000)
   -o, --output OUTPUT        output filename / absolute path (default: data.xlsx)
+  -g, --grammar              fofa search grammar help table
+  -t, --tip TIP              fofa search keyword tip droplist
+  -ih, --iconhash ICONHASH   calculate url specified favicon icon_hash
 ```
 
+- fofa search tip
+
+![image-20210730140630127](images/image-20210730140630127.png)
+
+- favicon icon hash
+
+![image-20210730140842568](images/image-20210730140842568.png)
+
+- fofa search grammar
+
+![image-20210730140930181](images/image-20210730140930181.png)

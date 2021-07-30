@@ -15,9 +15,16 @@ func main() {
 	logger.AsciiBanner()
 
 	email, apiKey, query, ruleFile, size, output, err := option.ParseCli(os.Args[1:])
+
 	if err != nil {
 		if err == option.PrintUsage {
 			logger.Usage()
+		} else if err == option.PrintGrammar {
+			logger.FofaGrammar()
+		} else if err == option.IconHash {
+			fetch.GetIconHash(err.Error())
+		} else if err == option.FofaTip {
+			fetch.GetFofaTip(err.Error())
 		} else {
 			logger.Warn(err.Error())
 		}
@@ -38,12 +45,17 @@ func main() {
 	}
 
 	logger.Success(fmt.Sprintf("Current Fetch Size: %v", size))
+	logger.Success(fmt.Sprintf("Current Output Path: %v", output))
 
 	clt := fetch.NewFofaClient(email, apiKey, size)
 
 	vaild, err := clt.Auth()
 	if vaild != true {
-		logger.Warn(err.Error())
+		if err != nil {
+			logger.Warn(err.Error())
+		} else {
+			logger.Warn("not vaild!")
+		}
 		return
 	} else {
 		logger.Success("Account(email & key) verified successfully.")

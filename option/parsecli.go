@@ -7,6 +7,9 @@ import (
 
 var (
 	PrintUsage        = errors.New("")
+	PrintGrammar      = errors.New("Grammar")
+	IconHash          = errors.New("IconHash")
+	FofaTip           = errors.New("FofaTip")
 	errorNoQueryFound = errors.New("No query statement or rule file found, -q or -f parameter must be specified.")
 )
 
@@ -63,8 +66,23 @@ func ParseCli(args []string) (
 				output = args[pos+1]
 				pos++
 			}
+		case "-t", "--tip":
+			if pos+1 < len(args) {
+				FofaTip = errors.New(args[pos+1])
+				err = FofaTip
+				return
+			}
+		case "-ih", "--iconhash":
+			if pos+1 < len(args) {
+				IconHash = errors.New(args[pos+1])
+				err = IconHash
+				return
+			}
 		case "-h", "--help":
 			err = PrintUsage
+			return
+		case "-g", "--grammar":
+			err = PrintGrammar
 			return
 		}
 	}
