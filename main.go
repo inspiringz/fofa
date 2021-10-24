@@ -32,7 +32,7 @@ func main() {
 	}
 
 	logger.Success(fmt.Sprintf("Current Email: %v", email))
-	logger.Success(fmt.Sprintf("Current Email: %v", apiKey))
+	logger.Success(fmt.Sprintf("Current Key: %v", apiKey))
 
 	var querys []string
 

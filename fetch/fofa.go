@@ -26,7 +26,7 @@ var (
 	errorForbidden    = errors.New("403 Forbidden, can't access the fofa service normally.")
 	error503          = errors.New("503 Service Temporarily Unavailable")
 	error502          = errors.New("502 Bad Gateway")
-	fields            = "host,ip,port,server,domain,title,country,province,city,icp"
+	fields            = "host,ip,port,server,domain,title,country,province,city,icp,protocol"
 	FetchResult       = make(map[string]([][]string))
 )
 

@@ -42,13 +42,13 @@ func cleanSheetName(sheetName string) (result string) {
 	return
 }
 
-func formatHost(host string) (nhost string) {
+func formatHost(host string, protocol string) (nhost string) {
 	nhost = host
 	if !strings.Contains(host, "http") {
-		if strings.Contains(host, "443") {
-			nhost = "https://" + host
-		} else {
+		if protocol == "http" {
 			nhost = "http://" + host
+		} else if protocol == "https" {
+			nhost = "https://" + host
 		}
 	}
 	return
@@ -84,8 +84,11 @@ func WriteXlsx(fResult map[string][][]string, output string) {
 		for i, line := range r {
 			row := i + 2
 			for j, cell := range line {
+				if j == 10 { // protocol
+					continue
+				}
 				if j == 0 {
-					cell = formatHost(cell)
+					cell = formatHost(cell, line[10])
 				} else if j == 5 {
 					cell = strings.TrimSpace(cell)
 				}

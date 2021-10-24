@@ -36,7 +36,7 @@ func ParseCli(args []string) (
 
 	for pos := 0; pos < len(args); pos++ {
 		switch args[pos] {
-		case "-e", "--email":
+		case "-m", "--mail":
 			if pos+1 < len(args) {
 				email = args[pos+1]
 				pos++
