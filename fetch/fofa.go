@@ -49,7 +49,7 @@ func FofaRetryPolicy() func(ctx context.Context, resp *http.Response, err error)
 			return false, ctx.Err()
 		}
 
-		if resp.StatusCode == 503 {
+		if resp.StatusCode == 503 || resp.StatusCode == 409 {
 			return true, nil
 		}
 
@@ -206,15 +206,28 @@ func (ff *Fofa) QueryAllT(querys []string) {
 
 	logger.Info(fmt.Sprintf("Totally %v rules waiting to be queried.", len(querys)))
 
-	wg := sync.WaitGroup{}
-	wg.Add(len(querys))
+	maxNoGoroutines := 10
+	concurrentGoroutines := make(chan struct{}, maxNoGoroutines)
+	for i := 0; i < maxNoGoroutines; i++ {
+		concurrentGoroutines <- struct{}{}
+	}
+
+	done := make(chan bool)
+	waitForAllJobs := make(chan bool)
+
+	go func() {
+		for i := 0; i < len(querys); i++ {
+			<-done
+			concurrentGoroutines <- struct{}{}
+		}
+		waitForAllJobs <- true
+	}()
 
 	for i, q := range querys {
-
-		time.Sleep(90 * time.Millisecond)
+		time.Sleep(300 * time.Millisecond)
+		<-concurrentGoroutines
 
 		go func(pos int, query string) {
-			defer wg.Done()
 			logger.Info(fmt.Sprintf("-> %v, %v", pos, query))
 			qresult := ff.Query(query)
 			FetchResultT.Lock()
@@ -225,11 +238,13 @@ func (ff *Fofa) QueryAllT(querys []string) {
 			} else {
 				logger.Success(fmt.Sprintf("<- %v, %v", pos, query))
 			}
+			done <- true
 		}(i, q)
 	}
 
-	wg.Wait()
+	<-waitForAllJobs
 	logger.Success(fmt.Sprintf("All (%v) Queries completed!", len(querys)))
+
 }
 
 func (ff *Fofa) IconHash(url string) (iconHash string) {

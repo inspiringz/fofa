@@ -4,9 +4,9 @@
 
 - Goroutine + retryablehttp
 
-![image-20210730141504333](images/image-20210730141504333.png)
+![image-20211204193949354](images/image-20211204193949354.png)
 
-![image-20210728223137038](images/image-20210728223137038.png)
+![image-20211204194044392](images/image-20211204194044392.png)
 
 ## Build
 
@@ -17,8 +17,6 @@ go build -ldflags "-s -w" -trimpath
 ```
 
 ## Usage
-
-- fofa_email / fofa_key 优先从命令行参数`-m`/`-k`指定的值中获取，若无则尝试从环境变量`FOFA_EMAIL`/`FOFA_KEY`中获取，最后尝试从 option/parsecli.go 中定义的`DefaultEmail`/`DefaultAPIKey`中获取。
 
 ```
 
@@ -45,6 +43,8 @@ Options:
   -t, --tip TIP              fofa search keyword tip droplist
   -ih, --iconhash ICONHASH   calculate url specified favicon icon_hash
 ```
+
+> fofa_email / fofa_key 优先从命令行参数`-m`/`-k`指定的值中获取，若无则尝试从环境变量`FOFA_EMAIL`/`FOFA_KEY`中获取，最后尝试从 option/parsecli.go 中定义的`DefaultEmail`/`DefaultAPIKey`中获取。
 
 - fofa search tip
 
