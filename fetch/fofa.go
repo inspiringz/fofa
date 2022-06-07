@@ -129,7 +129,7 @@ func (ff *Fofa) Query(query string) (resultArray [][]string) {
 
 	base64Query := base64.StdEncoding.EncodeToString([]byte(query))
 
-	queryUrl := fmt.Sprintf("https://fofa.so/api/v1/search/all?email=%s&key=%s&qbase64=%s&size=%s&fields=%s",
+	queryUrl := fmt.Sprintf("https://fofa.info/api/v1/search/all?email=%s&key=%s&qbase64=%s&size=%s&fields=%s",
 		ff.email, ff.apiKey, base64Query, ff.size, fields)
 
 	body, err := ff.Get(queryUrl)
@@ -167,7 +167,7 @@ func (ff *Fofa) Auth() (valid bool, err error) {
 	valid = false
 	err = nil
 
-	authUrl := fmt.Sprintf("https://fofa.so/api/v1/info/my?email=%s&key=%s", ff.email, ff.apiKey)
+	authUrl := fmt.Sprintf("https://fofa.info/api/v1/info/my?email=%s&key=%s", ff.email, ff.apiKey)
 
 	body, err := ff.Get(authUrl)
 
@@ -286,7 +286,7 @@ func GetIconHash(url string) {
 
 func (ff *Fofa) FofaTip(keyword string) (dropList []string) {
 
-	tipUrl := "https://api.fofa.so/v1/search/tip?q=" + keyword
+	tipUrl := "https://api.fofa.info/v1/search/tip?q=" + keyword
 
 	content, err := ff.Get(tipUrl)
 
